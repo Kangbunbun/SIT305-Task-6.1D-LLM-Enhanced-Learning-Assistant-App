@@ -1,748 +1,167 @@
-\# SIT305 Task 6.1D - LLM-Enhanced Learning Assistant App
+# SIT305 Task 6.1D - LLM-Enhanced Learning Assistant App
 
+This project is an Android learning assistant app developed for SIT305 Task 6.1D.
 
+The app allows students to sign up, select learning interests, complete learning tasks, generate AI hints, and receive AI explanations for their answers.
 
-This repository contains my Android application for \*\*SIT305 Task 6.1D: LLM-Enhanced Learning Assistant App\*\*.
+The LLM integration is handled through a local Node.js backend. The Android app does not store the API key directly.
 
+---
 
+## Main Features
 
-The app is designed to support student learning by providing personalised learning tasks based on selected interests. It also integrates LLM-powered learning utilities through a local backend API.
+- Login and sign up flow
+- Interest selection screen
+- Home screen with learning tasks based on selected interests
+- Multiple-choice task screen
+- Results screen with score, selected answer, and correct answer
+- AI-generated hint for a question
+- AI-generated explanation for the student's answer
+- Prompt and AI response displayed in the app UI
+- Loading and error handling for AI requests
 
+---
 
+## LLM Learning Utilities
 
-The Android app does \*\*not\*\* store any API key directly. Instead, it sends learning prompts to a local Node.js backend, and the backend securely calls the Groq API.
+This app includes two LLM-powered learning utilities.
 
+### 1. Generate Hint
 
+On the task screen, the student can tap **Get Hint**.
 
-\---
+The app sends the topic, question, and answer options to the backend. The LLM returns a short beginner-friendly hint without directly revealing the answer.
 
+### 2. Explain My Answer
 
+On the results screen, the student can tap **Explain My Answer**.
 
-\## Project Overview
+The app sends the topic, question, correct answer, and the student's selected answer to the backend. The LLM returns a short explanation of why the answer is correct or incorrect.
 
+---
 
+## Technology Stack
 
-The app follows a simple student learning flow:
+### Android
 
+- Kotlin
+- XML layouts
+- ViewBinding
+- Fragment navigation
+- ViewModel and LiveData
+- RecyclerView
+- Retrofit
 
+### Backend
 
-1\. The student signs up or logs in.
+- Node.js
+- Express
+- Groq API
+- dotenv
 
-2\. The student selects learning interests.
+---
 
-3\. The home screen displays learning tasks based on those interests.
+## Backend Setup
 
-4\. The student completes multiple-choice learning questions.
+The backend is required for real AI responses.
 
-5\. The app provides AI-generated hints and answer explanations.
-
-6\. The results screen shows the student’s score, selected answers, correct answers, and AI explanations.
-
-
-
-This structure is intended to demonstrate how an LLM can be used for learning support, rather than only acting as a general chatbot.
-
-
-
-\---
-
-
-
-\## Main Features
-
-
-
-\### Android App
-
-
-
-\- Login screen
-
-\- Sign up screen
-
-\- Interest selection screen
-
-\- Home screen with interest-based learning tasks
-
-\- Task screen with multiple-choice questions
-
-\- Results screen with score and answer feedback
-
-\- Prompt and AI response displayed directly in the UI
-
-\- Loading state while waiting for AI responses
-
-\- Error handling for failed AI/backend requests
-
-
-
-\### LLM-Powered Learning Utilities
-
-
-
-This app includes two LLM-powered learning utilities:
-
-
-
-\#### 1. Generate Hint
-
-
-
-Available on the task screen.
-
-
-
-The app sends the selected topic, question, and answer options to the backend.  
-
-The LLM returns a short beginner-friendly hint without revealing the answer directly.
-
-
-
-Example information sent in the prompt:
-
-
-
-```text
-
-Topic: Testing
-
-Question: Why do we test software?
-
-Options: To find bugs, To make it more expensive, To change the icon
-
-Task: Give one short beginner-friendly hint without revealing the correct answer.
-
-```
-
-
-
-\#### 2. Explain My Answer
-
-
-
-Available on the results screen.
-
-
-
-The app sends the topic, question, correct answer, and the student’s selected answer to the backend.  
-
-The LLM explains why the student’s answer is correct or incorrect.
-
-
-
-Example information sent in the prompt:
-
-
-
-```text
-
-Topic: Testing
-
-Question: Why do we test software?
-
-Correct answer: To find bugs
-
-Student answer: To find bugs
-
-Task: Explain why this answer is correct.
-
-```
-
-
-
-\---
-
-
-
-\## Technology Stack
-
-
-
-\### Android
-
-
-
-\- Kotlin
-
-\- XML layouts
-
-\- ViewBinding
-
-\- Fragment-based navigation
-
-\- RecyclerView
-
-\- ViewModel
-
-\- LiveData
-
-\- Retrofit
-
-\- Material UI components
-
-
-
-\### Backend
-
-
-
-\- Node.js
-
-\- Express.js
-
-\- Groq SDK
-
-\- dotenv
-
-\- CORS
-
-
-
-\### LLM Provider
-
-
-
-\- Groq API
-
-\- Model used in backend: `llama-3.3-70b-versatile`
-
-
-
-\---
-
-
-
-\## Repository Structure
-
-
-
-```text
-
-SIT305-Task-6.1D-LLM-Enhanced-Learning-Assistant-App/
-
-│
-
-├── app/
-
-│   └── Android application source code
-
-│
-
-├── gradle/
-
-│   └── Gradle wrapper files
-
-│
-
-├── learning-ai-backend/
-
-│   ├── server.js
-
-│   ├── package.json
-
-│   ├── package-lock.json
-
-│   └── .env.example
-
-│
-
-├── build.gradle.kts
-
-├── settings.gradle.kts
-
-├── gradle.properties
-
-├── gradlew
-
-├── gradlew.bat
-
-├── .gitignore
-
-└── README.md
-
-```
-
-
-
-\---
-
-
-
-\## Backend Setup
-
-
-
-The backend is required for real LLM API responses.
-
-
-
-The Android app sends requests to:
-
-
-
-```text
-
-http://10.0.2.2:3000/
-
-```
-
-
-
-This address allows the Android emulator to connect to a backend running on the computer’s localhost.
-
-
-
-\---
-
-
-
-\### 1. Open the Backend Folder
-
-
-
-From the project root:
-
-
+Open the backend folder:
 
 ```bash
-
 cd learning-ai-backend
-
 ```
 
-
-
-\---
-
-
-
-\### 2. Install Backend Dependencies
-
-
+Install backend dependencies:
 
 ```bash
-
 npm install
-
 ```
 
-
-
-\---
-
-
-
-\### 3. Create the `.env` File
-
-
-
-Create a new file named:
-
-
-
-```text
-
-.env
-
-```
-
-
-
-Use `.env.example` as a guide:
-
-
+Create a `.env` file based on `.env.example`:
 
 ```env
-
-GROQ\_API\_KEY=your\_groq\_api\_key\_here
-
+GROQ_API_KEY=your_groq_api_key_here
 PORT=3000
-
 ```
 
-
-
-Replace `your\_groq\_api\_key\_here` with your own Groq API key.
-
-
-
-Do not upload the `.env` file to GitHub.
-
-
-
-\---
-
-
-
-\### 4. Start the Backend
-
-
+Start the backend:
 
 ```bash
-
 npm start
-
 ```
 
+The backend should run at:
 
-
-If the backend starts successfully, the terminal should show:
-
-
-
-```text
-
-Learning AI backend running on http://localhost:3000
-
-```
-
-
-
-You can also test the backend in a browser:
-
-
-
-```text
-
+```bash
 http://localhost:3000
-
 ```
 
-
-
-Expected result:
-
-
-
-```text
-
-Learning AI backend is running.
-
-```
-
-
-
-\---
-
-
-
-\## Testing the Backend API
-
-
-
-\### Test Hint Endpoint
-
-
-
-```powershell
-
-Invoke-RestMethod `
-
-&#x20; -Uri "http://localhost:3000/ai/hint" `
-
-&#x20; -Method POST `
-
-&#x20; -ContentType "application/json" `
-
-&#x20; -Body '{"prompt":"Topic: Web Development. Question: What is HTML? Give a short hint without revealing the answer."}'
-
-```
-
-
-
-\### Test Explanation Endpoint
-
-
-
-```powershell
-
-Invoke-RestMethod `
-
-&#x20; -Uri "http://localhost:3000/ai/explain" `
-
-&#x20; -Method POST `
-
-&#x20; -ContentType "application/json" `
-
-&#x20; -Body '{"prompt":"Topic: Web Development. Question: What language is used for web structure? Correct answer: HTML. Student answer: CSS. Explain why the correct answer is correct and why the student answer is incorrect."}'
-
-```
-
-
-
-Both endpoints should return a JSON response containing an AI-generated response.
-
-
-
-\---
-
-
-
-\## Running the Android App
-
-
-
-1\. Open the project in Android Studio.
-
-2\. Start the backend first:
-
-
+The Android emulator connects to the local backend using:
 
 ```bash
+http://10.0.2.2:3000/
+```
 
+This URL is configured in:
+
+```bash
+app/src/main/java/com/example/llm_enhancedlearningassistantapp/network/RetrofitClient.kt
+```
+
+---
+
+## Running the App
+
+Start the backend first:
+
+```bash
 cd learning-ai-backend
-
 npm install
-
 npm start
-
 ```
 
+Then open the Android project in Android Studio and run the app on an emulator.
 
+Use the app flow:
 
-3\. Run the Android app on an emulator.
-
-4\. Use the app flow:
-
-
-
-```text
-
-Sign Up → Select Interests → Login → Home → Task → Results
-
+```bash
+Sign Up -> Select Interests -> Login -> Home -> Task -> Results
 ```
 
+On the task screen, tap:
 
-
-5\. On the task screen, tap:
-
-
-
-```text
-
+```bash
 Get Hint
-
 ```
 
+On the results screen, tap:
 
-
-6\. On the results screen, tap:
-
-
-
-```text
-
+```bash
 Explain My Answer
-
 ```
 
+The app displays both the prompt sent to the backend and the AI response returned from the backend.
 
+---
 
-The app should display both:
+## Security Note
 
+The real API key should only be stored in:
 
-
-```text
-
-PROMPT SENT
-
-```
-
-
-
-and:
-
-
-
-```text
-
-AI RESPONSE / AI EXPLANATION
-
-```
-
-
-
-inside the app UI.
-
-
-
-\---
-
-
-
-\## Android Backend Configuration
-
-
-
-The Android app uses Retrofit to communicate with the backend.
-
-
-
-Backend URL location:
-
-
-
-```text
-
-app/src/main/java/com/example/llm\_enhancedlearningassistantapp/network/RetrofitClient.kt
-
-```
-
-
-
-Current emulator backend URL:
-
-
-
-```kotlin
-
-private const val BASE\_URL = "http://10.0.2.2:3000/"
-
-```
-
-
-
-The Android manifest includes internet access and allows local HTTP traffic for the local backend:
-
-
-
-```xml
-
-<uses-permission android:name="android.permission.INTERNET" />
-
-```
-
-
-
-```xml
-
-android:usesCleartextTraffic="true"
-
-```
-
-
-
-\---
-
-
-
-\## Security Notes
-
-
-
-The API key is not stored in the Android app.
-
-
-
-The real key should only be placed in:
-
-
-
-```text
-
+```bash
 learning-ai-backend/.env
-
 ```
 
+This file is ignored by Git and should not be uploaded to GitHub.
 
+Only this example file is included in the repository:
 
-This file is ignored by Git and should not be pushed to GitHub.
-
-
-
-The repository only includes:
-
-
-
-```text
-
+```bash
 learning-ai-backend/.env.example
-
 ```
 
+---
 
-
-This allows another user to understand the required environment variable format without exposing a real API key.
-
-
-
-\---
-
-
-
-\## Files Ignored by Git
-
-
-
-The following files and folders should not be pushed:
-
-
-
-```text
-
-learning-ai-backend/.env
-
-learning-ai-backend/node\_modules/
-
-local.properties
-
-.gradle/
-
-build/
-
-app/build/
-
-.idea/
-
-```
-
-
-
-These files are excluded using `.gitignore`.
-
-
-
-\---
-
-
-
-\## Notes for Assessment
-
-
-
-This project demonstrates:
-
-
-
-\- Android UI structure using multiple screens
-
-\- Student interest selection
-
-\- Generated learning tasks using dummy data
-
-\- Multiple-choice question interaction
-
-\- Score calculation
-
-\- LLM-generated learning hints
-
-\- LLM-generated answer explanations
-
-\- Prompt and response visibility in the UI
-
-\- Backend API communication using Retrofit
-
-\- Basic responsible API key handling through a backend layer
-
-
-
-\---
-
-
-
-\## Author
-
-
+## Author
 
 Thien Khang Nguyen
-
